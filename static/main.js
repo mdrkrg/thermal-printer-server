@@ -95,9 +95,10 @@ function switchType(type) {
   ['text', 'qr', 'barcode', 'image', 'cut'].forEach((t) => {
     document.getElementById(`form-${t}`).classList.toggle('hidden', t !== type)
   })
-  document.querySelectorAll('.type-tabs button').forEach((btn, i) => {
+  document.querySelectorAll('#type-tabs button').forEach((btn, i) => {
     const types = ['text', 'qr', 'barcode', 'image', 'cut']
     btn.classList.toggle('active', types[i] === type)
+    btn.classList.toggle('btn-ghost', types[i] === type)
   })
 }
 
