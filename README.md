@@ -39,7 +39,6 @@ lsusb
 PRINTER_VENDOR_ID=0x0202
 PRINTER_PRODUCT_ID=0x04b8
 PRINTER_PROFILE=TM-T88III
-PRINTER_IN_EP=0
 ```
 
 ## Configuration
@@ -98,8 +97,6 @@ Paper status values:
 - `"low"` (code 1): Paper is running low
 - `"out"` (code 0): No paper
 - `"unknown"` (code -1): Unable to query status
-
-*Note: May not work for some printers.*
 
 ### 1. Simple Text Receipt
 

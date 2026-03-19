@@ -14,7 +14,3 @@ PRODUCT_ID = int(_product_id_str, 16)
 
 PROFILE = os.getenv("PRINTER_PROFILE", "TM-T88III")
 """Printer profile."""
-
-_in_ep_str = os.getenv("PRINTER_IN_EP", "0")
-IN_EP = int(_in_ep_str)
-"""USB endpoint."""

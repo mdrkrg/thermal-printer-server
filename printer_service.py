@@ -26,7 +26,6 @@ class PrinterService:
         self.printer = Usb(
             idVendor=config.VENDOR_ID,
             idProduct=config.PRODUCT_ID,
-            in_ep=config.IN_EP,
             profile=config.PROFILE,
         )
 
