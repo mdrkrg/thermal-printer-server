@@ -23,11 +23,41 @@ class PrinterService:
 
     def __init__(self):
         """Initialize printer connection."""
+        self._usb_args = {
+            "idVendor": config.VENDOR_ID,
+            "idProduct": config.PRODUCT_ID,
+        }
         self.printer = Usb(
             idVendor=config.VENDOR_ID,
             idProduct=config.PRODUCT_ID,
             profile=config.PROFILE,
         )
+
+    def _ensure_connected(self) -> None:
+        """Probe the USB handle and reconnect if stale. Raises PrintError(503) on failure."""
+        try:
+            # zero-byte write, just pokes the handle
+            self.printer._raw(b"")
+            return
+        except Exception:
+            # stale handle, fall through to reconnect
+            pass
+
+        # dispose and reopen
+        try:
+            self.printer.close()
+        except Exception:
+            pass
+
+        try:
+            self.printer.open(self._usb_args)  # type: ignore[arg-type]
+        except Exception as e:
+            raise PrintError(
+                f"Printer not found: {e}",
+                items_processed=0,
+                time_taken_ms=0,
+                status_code=503,
+            ) from e
 
     def process_print_job(self, items: list[PrintItem]) -> tuple[int, int]:
         """
@@ -36,6 +66,7 @@ class PrinterService:
         Returns:
             Tuple of (items_processed, time_taken_ms)
         """
+        self._ensure_connected()
         start_time = time.time()
         items_processed = 0
         explicit_cut_at_end = None
@@ -126,6 +157,7 @@ class PrinterService:
 
     def get_status(self) -> dict[str, Any]:
         """Query printer online and paper status."""
+        self._ensure_connected()
         try:
             is_online = self.printer.is_online()
         except Exception:
