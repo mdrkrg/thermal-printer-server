@@ -1,8 +1,10 @@
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from models import PrintError, PrintErrorResponse, PrintRequest, PrintResponse
 from printer_service import PrinterService
@@ -25,6 +27,17 @@ app = FastAPI(
     version="0.1.0",
     lifespan=lifespan,
 )
+
+templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/")
+async def index(request: Request):
+    """Serve the printer frontend."""
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.post("/print", response_model=PrintResponse)

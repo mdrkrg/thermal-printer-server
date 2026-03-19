@@ -10,6 +10,7 @@ FastAPI-based HTTP server for controlling thermal printers. Supports printing te
 - **Images**: Base64-encoded images with automatic resizing to max 512px width
 - **Paper Cutting**: Configurable paper cut control
 - **Printer Status**: Query online status and paper level
+- **Web UI**: Built-in browser interface for building and sending print jobs
 
 ## Installation
 
@@ -54,6 +55,17 @@ python main.py
 ```
 
 The server will start on `http://localhost:8000`
+
+### Web UI
+
+Open `http://localhost:8000` in a browser to access the built-in interface. It lets you:
+
+- Check printer status (online/offline, paper level)
+- Build a print job by adding items one at a time (text, QR, barcode, image, cut)
+- Reorder and remove items before sending
+- Upload images directly from disk (converted to base64 automatically)
+- Preview the JSON payload before printing
+- Send the job and see the response
 
 ### API Documentation
 

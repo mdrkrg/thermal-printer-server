@@ -1,0 +1,318 @@
+/* Layout */
+
+#main-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.row > * {
+  flex: 1;
+  min-width: 120px;
+}
+
+.row > button {
+  flex: 0;
+  white-space: nowrap;
+}
+
+.submit-row {
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.field {
+  margin-bottom: 0.5rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Theme switcher */
+
+#theme-switcher {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.25rem;
+  z-index: 1000;
+}
+
+#theme-switcher button[data-active] {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+
+/* Status indicator dot */
+
+#status-box {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #aaa;
+  flex-shrink: 0;
+}
+
+#status-indicator.online  { background: #2a2; }
+#status-indicator.offline { background: #c00; }
+
+#htmx-status {
+  font-size: 12px;
+  margin-left: auto;
+}
+
+.htmx-indicator        { opacity: 0; transition: opacity 0.2s; }
+.htmx-request .htmx-indicator { opacity: 1; }
+
+/* Items list */
+
+#items-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+
+#items-list li {
+  padding: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+#items-list li .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+#items-list li .item-type {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+#items-list li .item-summary {
+  font-size: 12px;
+  word-break: break-all;
+}
+
+/* Add-item form tabs */
+
+.add-form {
+  margin-top: 0.5rem;
+}
+
+.type-tabs {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+/* JSON preview / response */
+
+#preview,
+#response-box {
+  font-size: 12px;
+  white-space: pre;
+  overflow-x: auto;
+  padding: 0.75rem;
+  min-height: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#response-box {
+  min-height: 3rem;
+}
+
+/* Image preview */
+
+#image-preview {
+  max-width: 200px;
+  max-height: 200px;
+  display: block;
+}
+
+/* details / summary (Advanced Options) */
+
+details {
+  margin: 0.5rem 0;
+}
+
+details > summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 0.25rem 0.4rem;
+  list-style: none; /* hide default triangle in some browsers */
+}
+
+details > summary::before {
+  content: '▶ ';
+  font-size: 0.7em;
+  vertical-align: middle;
+}
+
+details[open] > summary::before {
+  content: '▼ ';
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details .row {
+  margin-top: 0.5rem;
+}
+
+/* Terminal theme overrides */
+
+body.terminal #main-content {
+  padding-top: 2.5rem; /* clear fixed switcher */
+}
+
+body.terminal section {
+  margin-bottom: 1rem;
+}
+
+body.terminal .add-form {
+  border: 1px solid var(--secondary-color, #727578);
+  padding: 0.75rem;
+}
+
+body.terminal .type-tabs button.active {
+  background: var(--primary-color, #1a95e0);
+  color: var(--invert-font-color, #fff);
+  border-color: var(--primary-color, #1a95e0);
+}
+
+body.terminal #items-list li {
+  border: 1px solid var(--secondary-color, #727578);
+}
+
+body.terminal #preview,
+body.terminal #response-box {
+  background: #111;
+  color: #0f0;
+}
+
+body.terminal #response-box.error {
+  color: #f88;
+}
+
+body.terminal details > summary {
+  color: var(--primary-color, #1a95e0);
+}
+
+body.terminal button.primary {
+  background: var(--primary-color, #1a95e0);
+  color: var(--invert-font-color, #fff);
+  border-color: var(--primary-color, #1a95e0);
+}
+
+body.terminal button.danger {
+  background: var(--error-color, #d20962);
+  color: var(--invert-font-color, #fff);
+  border-color: var(--error-color, #d20962);
+}
+
+/* XP / 98 window layout */
+
+body.theme-windowed {
+  margin: 0;
+  padding: 1rem;
+  background: #008080; /* classic teal desktop */
+  min-height: 100vh;
+}
+
+body.theme-windowed.theme-98 {
+  background: #008080;
+}
+
+#xp-window {
+  margin: 0 auto;
+  max-width: 900px;
+  width: 100%;
+}
+
+#xp-window .window-body {
+  padding: 0.5rem;
+  overflow-y: auto;
+  max-height: calc(100vh - 80px);
+}
+
+body.theme-windowed #theme-switcher {
+  /* inside title bar area — keep fixed but shift down */
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+body.theme-windowed #main-content {
+  padding: 0;
+  max-width: 100%;
+}
+
+/* XP/98: style the code blocks since the frameworks don't */
+body.theme-windowed #preview,
+body.theme-windowed #response-box {
+  background: #000080;
+  color: #fff;
+  font-family: monospace;
+  font-size: 12px;
+}
+
+body.theme-windowed #response-box.error {
+  color: #ff8080;
+}
+
+/* XP/98: items list */
+body.theme-windowed #items-list li {
+  border: 1px solid #aaa;
+  background: #fff;
+  padding: 0.4rem;
+}
+
+/* XP/98: add-form border */
+body.theme-windowed .add-form {
+  border: 1px solid #aaa;
+  padding: 0.5rem;
+  background: #f0f0f0;
+}
+
+/* XP/98: active tab button */
+body.theme-windowed .type-tabs button.active {
+  font-weight: bold;
+}
+
+/* XP/98: details/summary as a fieldset-like box */
+body.theme-windowed details {
+  border: 1px solid #aaa;
+  padding: 0.25rem 0.5rem 0.5rem;
+  background: #f5f5f5;
+}
+
+body.theme-windowed details > summary {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+/* XP/98: submit status text */
+body.theme-windowed #submit-status {
+  font-size: 12px;
+}
