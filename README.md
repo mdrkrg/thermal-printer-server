@@ -26,24 +26,46 @@ Configure your printer by copying `.env.example` to `.env`:
 cp .env.example .env
 ```
 
-Edit `.env` with your printer's USB IDs:
+### USB printer
+
+Find your printer's vendor and product IDs, then update `.env`:
 
 ```bash
 # Find your printer's USB IDs
 lsusb
-
 # Example output:
-# Bus 001 Device 001: ID 0202:04b8 TM-T88III
+# Bus 001 Device 030: ID 04b8:0202 Seiko Epson Corp. TM-T88III
 
-# Update .env with the vendor and product IDs
-PRINTER_VENDOR_ID=0x0202
-PRINTER_PRODUCT_ID=0x04b8
+PRINTER_TYPE=usb
+PRINTER_VENDOR_ID=0x04b8
+PRINTER_PRODUCT_ID=0x0202
 PRINTER_PROFILE=TM-T88III
 ```
 
+On Linux you may need a udev rule to allow non-root access:
+
+```bash
+# /etc/udev/rules.d/99-escpos.rules
+SUBSYSTEM=="usb", ATTRS{idVendor}=="04b8", ATTRS{idProduct}=="0202", MODE="0664",  GROUP="dialout"
+```
+
+Please refer to [`python-escpos` installation docs](https://python-escpos.readthedocs.io/en/latest/user/installation.html#setup-udev-for-usb-printers) for more info.
+
+### Network printer
+
+Set the printer type to `network` and provide the IP address:
+
+```bash
+PRINTER_TYPE=network
+PRINTER_ADDRESS=192.168.1.100
+PRINTER_PROFILE=TM-T88III
+```
+
+The server connects to port 9100 (raw TCP), which is the standard ESC/POS network port. Make sure the printer's IP is reachable from the host running the server.
+
 ## Configuration
 
-See `.env.example` for more detailed explanations of environment variables.
+See `.env.example` for all available environment variables.
 
 ## Usage
 

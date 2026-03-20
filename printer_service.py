@@ -3,7 +3,7 @@ import time
 from io import BytesIO
 from typing import Any
 
-from escpos.printer import Usb
+from escpos.printer import Network, Usb
 from PIL import Image
 
 import config
@@ -23,18 +23,25 @@ class PrinterService:
 
     def __init__(self):
         """Initialize printer connection."""
-        self._usb_args = {
-            "idVendor": config.VENDOR_ID,
-            "idProduct": config.PRODUCT_ID,
-        }
-        self.printer = Usb(
-            idVendor=config.VENDOR_ID,
-            idProduct=config.PRODUCT_ID,
-            profile=config.PROFILE,
-        )
+        match config.TYPE:
+            case "usb":
+                self._usb_args = {
+                    "idVendor": config.VENDOR_ID,
+                    "idProduct": config.PRODUCT_ID,
+                }
+                self.printer = Usb(
+                    idVendor=config.VENDOR_ID,
+                    idProduct=config.PRODUCT_ID,
+                    profile=config.PROFILE,
+                )
+            case "network":
+                self._usb_args = None
+                self.printer = Network(config.ADDRESS, profile=config.PROFILE)
+            case _:
+                raise ValueError(f"Printer type {config.TYPE} is not supported")
 
     def _ensure_connected(self) -> None:
-        """Probe the USB handle and reconnect if stale. Raises PrintError(503) on failure."""
+        """Probe the connection and reconnect if stale. Raises PrintError(503) on failure."""
         try:
             # zero-byte write, just pokes the handle
             self.printer._raw(b"")
@@ -50,7 +57,10 @@ class PrinterService:
             pass
 
         try:
-            self.printer.open(self._usb_args)  # type: ignore[arg-type]
+            if self._usb_args is not None:
+                self.printer.open(self._usb_args)  # type: ignore[arg-type]
+            else:
+                self.printer.open()
         except Exception as e:
             raise PrintError(
                 f"Printer not found: {e}",
