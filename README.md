@@ -108,8 +108,8 @@ Response:
 ```json
 {
   "online": true,
-  "paper_status": "adequate",
-  "paper_status_code": 2
+  "paperStatus": "adequate",
+  "paperStatusCode": 2
 }
 ```
 
@@ -247,7 +247,7 @@ curl -X POST http://localhost:8000/print \
       "format": "EAN13",
       "height": 64,
       "width": 3,
-      "text_position": "BELOW"
+      "textPosition": "BELOW"
     },
     {
       "type": "image",
@@ -293,7 +293,7 @@ curl -X POST http://localhost:8000/print \
   "format": "EAN13",         // Required: see supported formats below
   "height": 64,              // Optional: 1-255, default 64
   "width": 3,                // Optional: 2-6, default 3
-  "text_position": "BELOW"   // Optional: ABOVE, BELOW, BOTH, OFF
+  "textPosition": "BELOW"    // Optional: ABOVE, BELOW, BOTH, OFF
 }
 ```
 
@@ -312,10 +312,10 @@ curl -X POST http://localhost:8000/print \
 {
   "type": "image",
   "source": "data:image/png;base64,...",  // Required: base64 data URI
-  "high_density_vertical": true,          // Optional: default true
-  "high_density_horizontal": true,        // Optional: default true
+  "highDensityVertical": true,            // Optional: default true
+  "highDensityHorizontal": true,          // Optional: default true
   "impl": "bitImageRaster",               // Optional: bitImageRaster, graphics, or bitImageColumn
-  "fragment_height": 960,                 // Optional: default 960
+  "fragmentHeight": 960,                  // Optional: default 960
   "center": false                         // Optional: default false
 }
 ```
@@ -352,8 +352,8 @@ Images wider than 512px are automatically resized while maintaining aspect ratio
 ```json
 {
   "success": true,
-  "items_processed": 5,
-  "time_taken_ms": 1234,
+  "itemsProcessed": 5,
+  "timeTakenMs": 1234,
   "timestamp": "2026-03-17T10:30:45.123456Z"
 }
 ```
@@ -365,9 +365,9 @@ Images wider than 512px are automatically resized while maintaining aspect ratio
   "success": false,
   "error": "Validation Error",
   "detail": "Unsupported barcode format: INVALID",
-  "item_index": 3,
-  "items_processed": 2,
-  "time_taken_ms": 456
+  "itemIndex": 3,
+  "itemsProcessed": 2,
+  "timeTakenMs": 456
 }
 ```
 

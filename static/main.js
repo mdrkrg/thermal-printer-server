@@ -74,7 +74,7 @@ function updateStatus(event) {
     const paper = document.getElementById('status-paper')
     indicator.className = data.online ? 'online' : 'offline'
     text.textContent = data.online ? 'Online' : 'Offline'
-    paper.textContent = `Paper: ${data.paper_status ?? '—'}`
+    paper.textContent = `Paper: ${data.paperStatus ?? '—'}`
   }
   catch (_) { }
 }
@@ -144,16 +144,16 @@ function addItem(type) {
     item.format = document.getElementById('barcode-format').value
     item.height = Number.parseInt(document.getElementById('barcode-height').value, 10)
     item.width = Number.parseInt(document.getElementById('barcode-width').value, 10)
-    item.text_position = document.getElementById('barcode-text-position').value
+    item.textPosition = document.getElementById('barcode-text-position').value
   }
   else if (type === 'image') {
     if (!imageBase64) { alert('Please select an image file'); return }
     item.source = imageBase64
     item.impl = document.getElementById('image-impl').value
-    item.fragment_height = Number.parseInt(document.getElementById('image-fragment-height').value, 10)
+    item.fragmentHeight = Number.parseInt(document.getElementById('image-fragment-height').value, 10)
     item.center = document.getElementById('image-center').value === 'true'
-    item.high_density_vertical = document.getElementById('image-hd-v').value === 'true'
-    item.high_density_horizontal = document.getElementById('image-hd-h').value === 'true'
+    item.highDensityVertical = document.getElementById('image-hd-v').value === 'true'
+    item.highDensityHorizontal = document.getElementById('image-hd-h').value === 'true'
   }
   else if (type === 'cut') {
     item.enabled = document.getElementById('cut-enabled').value === 'true'
@@ -207,7 +207,7 @@ function renderPreview(item, index) {
     </div>`
   }
   else if (item.type === 'barcode') {
-    const textPos = item.text_position
+    const textPos = item.textPosition
     previewEl.innerHTML = `<div class="preview-barcode">
       ${(textPos === 'ABOVE' || textPos === 'BOTH')
         ? `<div class="barcode-text">${escapeHtml(item.content)}</div>`

@@ -68,7 +68,7 @@ async def print_job(request: PrintRequest) -> JSONResponse:
                 items_processed=count,
                 time_taken_ms=ms,
                 timestamp=datetime.now(timezone.utc).isoformat(),
-            ).model_dump()
+            ).model_dump(by_alias=True)
         )
     except PrintError as e:
         return JSONResponse(
@@ -77,7 +77,7 @@ async def print_job(request: PrintRequest) -> JSONResponse:
                 detail=str(e),
                 items_processed=e.items_processed,
                 time_taken_ms=e.time_taken_ms,
-            ).model_dump(),
+            ).model_dump(by_alias=True),
             status_code=e.status_code,
         )
 
@@ -99,8 +99,8 @@ async def printer_status():
                 "error": "Status Query Error",
                 "detail": str(e),
                 "online": False,
-                "paper_status": "unknown",
-                "paper_status_code": -1,
+                "paperStatus": "unknown",
+                "paperStatusCode": -1,
             },
             status_code=503,
         )

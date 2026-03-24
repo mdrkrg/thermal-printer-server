@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Annotated, Literal
 
 from pydantic import BaseModel, Field, field_validator
+from pydantic.alias_generators import to_camel
 
 # Supported barcode formats from python-escpos
 SUPPORTED_BARCODE_FORMATS = {
@@ -23,14 +24,20 @@ SUPPORTED_BARCODE_FORMATS = {
 }
 
 
-class TextItem(BaseModel):
+class CamelCaseBaseModel(BaseModel):
+    class Config:
+        alias_generator = to_camel
+        validate_by_name = True
+
+
+class TextItem(CamelCaseBaseModel):
     """Print plain text."""
 
     type: Literal["text"] = "text"
     content: str
 
 
-class QRItem(BaseModel):
+class QRItem(CamelCaseBaseModel):
     """Print QR code."""
 
     type: Literal["qr"] = "qr"
@@ -39,7 +46,7 @@ class QRItem(BaseModel):
     center: bool = Field(default=False, description="Center the QR code")
 
 
-class BarcodeItem(BaseModel):
+class BarcodeItem(CamelCaseBaseModel):
     """Print barcode."""
 
     type: Literal["barcode"] = "barcode"
@@ -62,7 +69,7 @@ class BarcodeItem(BaseModel):
         return v
 
 
-class ImageItem(BaseModel):
+class ImageItem(CamelCaseBaseModel):
     """Print image from a base64-encoded data URI."""
 
     type: Literal["image"] = "image"
@@ -74,7 +81,7 @@ class ImageItem(BaseModel):
     center: bool = False
 
 
-class CutItem(BaseModel):
+class CutItem(CamelCaseBaseModel):
     """Control paper cutting."""
 
     type: Literal["cut"] = "cut"
@@ -95,13 +102,13 @@ PrintItem = Annotated[
 ]
 
 
-class PrintRequest(BaseModel):
+class PrintRequest(CamelCaseBaseModel):
     """Request to print a sequence of items."""
 
     items: list[PrintItem] = Field(description="Array of items to print in sequence")
 
 
-class PrintResponse(BaseModel):
+class PrintResponse(CamelCaseBaseModel):
     """Response from print operation."""
 
     success: bool
@@ -123,7 +130,7 @@ class PrintError(Exception):
         super().__init__(self.message)
 
 
-class PrintErrorResponse(BaseModel):
+class PrintErrorResponse(CamelCaseBaseModel):
     """Error response from print operation."""
 
     success: Literal[False] = False
