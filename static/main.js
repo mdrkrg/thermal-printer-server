@@ -185,9 +185,57 @@ function renderItems() {
           <button class="danger" onclick="removeItem(${i})">✕</button>
         </div>
       </div>
-      <div class="item-summary">${summary}</div>`
+      <div class="item-summary">${summary}</div>
+      <div class="item-preview" id="preview-${i}"></div>`
     list.appendChild(li)
+    renderPreview(item, i)
   })
+}
+
+function renderPreview(item, index) {
+  const previewEl = document.getElementById(`preview-${index}`)
+  if (!previewEl) return
+
+  if (item.type === 'text') {
+    previewEl.innerHTML = `<div class="preview-text">${escapeHtml(item.content)}</div>`
+  }
+  else if (item.type === 'qr') {
+    previewEl.innerHTML = `<div class="preview-qr">
+      <div class="qr-placeholder" style="width:${item.size * 20}px;height:${item.size * 20}px;${item.center ? 'margin:0 auto;' : ''}">
+        QR Code<br>${item.size}x
+      </div>
+    </div>`
+  }
+  else if (item.type === 'barcode') {
+    const textPos = item.text_position
+    previewEl.innerHTML = `<div class="preview-barcode">
+      ${(textPos === 'ABOVE' || textPos === 'BOTH')
+        ? `<div class="barcode-text">${escapeHtml(item.content)}</div>`
+        : ''}
+      <div class="barcode-placeholder" style="height:${item.height}px;">
+        ${item.format}
+      </div>
+      ${(textPos === 'BELOW' || textPos === 'BOTH')
+        ? `<div class="barcode-text">${escapeHtml(item.content)}</div>`
+        : ''}
+    </div>`
+  }
+  else if (item.type === 'image') {
+    previewEl.innerHTML = `<div class="preview-image">
+      <img src="${item.source}" style="max-width:100%;height:auto;${item.center ? 'margin:0 auto;' : ''}">
+    </div>`
+  }
+  else if (item.type === 'cut') {
+    previewEl.innerHTML = `<div class="preview-cut">
+      ${item.enabled ? '✂ -------------------' : '(cut disabled)'}
+    </div>`
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div')
+  div.textContent = text
+  return div.innerHTML
 }
 
 function removeItem(i) {

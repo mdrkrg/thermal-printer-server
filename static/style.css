@@ -112,6 +112,72 @@
   word-break: break-all;
 }
 
+#items-list li .item-preview {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border: 1px dashed #ccc;
+  font-size: 12px;
+}
+
+.preview-text {
+  white-space: pre-wrap;
+  font-family: monospace;
+}
+
+.preview-qr .qr-placeholder {
+  background: #fff;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.preview-barcode {
+  text-align: center;
+}
+
+.preview-barcode .barcode-placeholder {
+  background: repeating-linear-gradient(
+    90deg,
+    #000 0px,
+    #000 2px,
+    #fff 2px,
+    #fff 4px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 10px;
+  font-weight: bold;
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+.preview-barcode .barcode-text {
+  margin-top: 0.25rem;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+.preview-image {
+  display: flex;
+}
+
+.preview-image img {
+  display: block;
+  max-height: 200px;
+}
+
+.preview-cut {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
 /* Add-item form tabs */
 
 .add-form {
@@ -206,6 +272,40 @@ body.terminal #items-list li {
   border: 1px solid var(--secondary-color, #727578);
 }
 
+body.terminal #items-list li .item-preview {
+  background: #1a1a1a;
+  border-color: #444;
+}
+
+body.terminal .preview-text {
+  color: #0f0;
+}
+
+body.terminal .preview-qr .qr-placeholder {
+  background: #000;
+  border-color: #0f0;
+  color: #0f0;
+}
+
+body.terminal .preview-barcode .barcode-placeholder {
+  background: repeating-linear-gradient(
+    90deg,
+    #0f0 0px,
+    #0f0 2px,
+    #000 2px,
+    #000 4px
+  );
+  color: #0f0;
+}
+
+body.terminal .preview-barcode .barcode-text {
+  color: #0f0;
+}
+
+body.terminal .preview-cut {
+  color: #0f0;
+}
+
 body.terminal #preview,
 body.terminal #response-box {
   background: #111;
@@ -286,6 +386,28 @@ body.theme-windowed #items-list li {
   border: 1px solid #aaa;
   background: #fff;
   padding: 0.4rem;
+}
+
+body.theme-windowed #items-list li .item-preview {
+  background: #fff;
+  border-color: #999;
+}
+
+body.theme-windowed .preview-qr .qr-placeholder {
+  background: #fff;
+  border-color: #000;
+  color: #000;
+}
+
+body.theme-windowed .preview-barcode .barcode-placeholder {
+  background: repeating-linear-gradient(
+    90deg,
+    #000 0px,
+    #000 2px,
+    #fff 2px,
+    #fff 4px
+  );
+  color: #666;
 }
 
 /* XP/98: add-form border */
