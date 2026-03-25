@@ -34,7 +34,7 @@ templates = Jinja2Templates(directory="templates")
 @app.get("/")
 async def index(request: Request):
     """Serve the printer frontend."""
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
