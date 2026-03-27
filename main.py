@@ -10,6 +10,7 @@ from fastapi.templating import Jinja2Templates
 import config
 from models import PrintError, PrintErrorResponse, PrintRequest, PrintResponse
 from printer_service import PrinterService
+from utils import get_version_from_toml
 
 global printer
 printer: PrinterService
@@ -25,9 +26,14 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Thermal Printer HTTP Server",
-    description="HTTP API for controlling thermal printers via JSON with base64-encoded images",
-    version="0.1.0",
+    description="FastAPI HTTP server for controlling thermal printers",
+    version=get_version_from_toml(),
     lifespan=lifespan,
+    license_info={
+        "name": "GNU Affero General Public License v3.0 or later",
+        "identifier": "AGPL-3.0-or-later",
+        "url": "https://www.gnu.org/licenses/agpl-3.0.txt",
+    },
 )
 
 app.add_middleware(

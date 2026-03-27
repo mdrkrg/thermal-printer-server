@@ -1,7 +1,7 @@
 [project]
 name = "thermal-printer-server"
 version = "1.0.1"
-description = "Thermal printer HTTP server with FastAPI"
+description = "FastAPI HTTP server for controlling thermal printers"
 readme = "README.md"
 license = "AGPL-3.0-or-later"
 authors = [{ name = "MidoriKurage", email = "kuragectl@gmail.com" }]
