@@ -23,3 +23,9 @@ match TYPE:
         ADDRESS = os.getenv("PRINTER_ADDRESS", "192.168.1.100")
     case _:
         raise ValueError(f"Printer type {TYPE} is not supported")
+
+MOCK_PRINTER = os.getenv("MOCK_PRINTER", "false") == "true"
+
+_origins_str = os.getenv("CORS_ALLOWED_ORIGINS")
+CORS_ALLOWED_ORIGINS = _origins_str.split(",") if _origins_str else []
+"""Allowed origins."""
